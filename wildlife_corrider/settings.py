@@ -41,7 +41,7 @@ MIDDLEWARE = [
 # ======================
 # URL CONFIG
 # ======================
-ROOT_URLCONF = 'wildlife_corridor.urls'
+ROOT_URLCONF = 'wildlife_corrider.urls'
 
 
 # ======================
@@ -67,7 +67,7 @@ TEMPLATES = [
 # ======================
 # WSGI
 # ======================
-WSGI_APPLICATION = 'wildlife_corridor.wsgi.application'
+WSGI_APPLICATION = 'wildlife_corrider.wsgi.application'
 
 
 # ======================
