@@ -1,1 +1,44 @@
 
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Animal GPS Sensor</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<body>
+    <div style="text-align:center; margin-top:50px;">
+        <h2>Animal Sensor Active: {{ animal_id }}</h2>
+        <p id="status">Waiting for GPS...</p>
+    </div>
+
+    <script>
+        const animal_id = "{{ animal_id }}";
+
+        // Check if browser supports GPS
+        if (navigator.geolocation) {
+            navigator.geolocation.watchPosition(position => {
+                const lat = position.coords.latitude;
+                const lng = position.coords.longitude;
+
+                // Update the backend
+                fetch('/api/update-location/', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ animal_id: animal_id, latitude: lat, longitude: lng })
+                });
+
+                // Update status on page
+                document.getElementById('status').innerText =
+                    `Latitude: ${lat.toFixed(6)}, Longitude: ${lng.toFixed(6)}`;
+            }, error => {
+                document.getElementById('status').innerText = "GPS Error: " + error.message;
+            }, { enableHighAccuracy: true });
+        } else {
+            document.getElementById('status').innerText = "Geolocation is not supported by this device.";
+        }
+    </script>
+</body>
+</html>
