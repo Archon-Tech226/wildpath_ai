@@ -1,36 +1,23 @@
-{% load static %}
 <!DOCTYPE html>
 <html>
 <head>
     <title>Animal Sensor</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+
+    <style>
+        body {
+            font-family: Arial;
+            text-align: center;
+            margin-top: 100px;
+        }
+    </style>
 </head>
+
 <body>
 
-<h2>Animal GPS Sensor</h2>
-
-<form method="post">
-    {% csrf_token %}
-    <input type="text" name="animal_id" placeholder="Enter Animal ID" required>
-    <button type="submit">Start Tracking</button>
-</form>
-
-<script>
-navigator.geolocation.watchPosition(function(position) {
-    fetch("/update-location/", {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json"
-        },
-        body: JSON.stringify({
-            animal_id: "{{ animal_id }}",
-            latitude: position.coords.latitude,
-            longitude: position.coords.longitude
-        })
-    });
-});
-</script>
+<h2>Animal Sensor Active</h2>
+<p>GPS is ON</p>
+<p>Sending location to admin dashboard...</p>
 
 </body>
 </html>
