@@ -1,31 +1,59 @@
-{% load static %}
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Wildlife Corridor Dashboard</title>
+    <title>Admin Dashboard</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <!-- Leaflet CSS -->
+    <!-- Leaflet -->
     <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css"/>
-    <!-- Custom CSS -->
-    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+
+    <style>
+        body {
+            font-family: Arial;
+            margin: 0;
+            padding: 0;
+            text-align: center;
+        }
+        #map {
+            height: 400px;
+            margin: 20px;
+        }
+        h2 {
+            background: #2e7d32;
+            color: white;
+            padding: 15px;
+            margin: 0;
+        }
+    </style>
 </head>
+
 <body>
 
-<h2>Wildlife Corridor Dashboard</h2>
+<h2>Admin Dashboard – Live Animal Tracking</h2>
+<p style="color:green;">● Live GPS Simulation</p>
 
 <div id="map"></div>
 
-<!-- Leaflet JS -->
 <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
 
-<!-- Pass animal data to JS -->
 <script>
-    const animals = {{ animals|safe }};
-</script>
+    var map = L.map('map').setView([11.1271, 78.6569], 7);
 
-<!-- Custom JS -->
-<script src="{% static 'js/main.js' %}"></script>
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: '© OpenStreetMap'
+    }).addTo(map);
+
+    var marker = L.marker([11.2, 78.6]).addTo(map)
+        .bindPopup("Animal ID: A001")
+        .openPopup();
+
+    // LIVE movement simulation
+    setInterval(function () {
+        var lat = 11 + Math.random();
+        var lng = 78 + Math.random();
+        marker.setLatLng([lat, lng]);
+    }, 3000);
+</script>
 
 </body>
 </html>
