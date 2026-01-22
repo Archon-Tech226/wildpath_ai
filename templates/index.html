@@ -2,29 +2,30 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Login | Wildlife Corridor</title>
+    <title>Wildlife Corridor Dashboard</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Leaflet CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css"/>
+    <!-- Custom CSS -->
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
 </head>
 <body>
 
-<div class="login-container">
-    <h2>Wildlife Corridor System</h2>
+<h2>Wildlife Corridor Dashboard</h2>
 
-    <div class="login-box">
-        <h3>Admin Login</h3>
-        <form action="/admin/login/" method="get">
-            <button type="submit">Login as Admin</button>
-        </form>
-    </div>
+<div id="map"></div>
 
-    <div class="login-box">
-        <h3>Sensor / Animal Login</h3>
-        <form action="/sensor-login/" method="get">
-            <button type="submit">Login as Animal</button>
-        </form>
-    </div>
-</div>
+<!-- Leaflet JS -->
+<script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+
+<!-- Pass animal data to JS -->
+<script>
+    const animals = {{ animals|safe }};
+</script>
+
+<!-- Custom JS -->
+<script src="{% static 'js/main.js' %}"></script>
 
 </body>
 </html>
