@@ -20,7 +20,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
-    'cooridor',   # OUR APP
+    'coorider',   # OUR APP
 ]
 
 
