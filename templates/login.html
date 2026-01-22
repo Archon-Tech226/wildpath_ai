@@ -1,29 +1,43 @@
-{% load static %}
 <!DOCTYPE html>
 <html>
 <head>
     <title>Login | Wildlife Corridor</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+
+    <style>
+        body {
+            font-family: Arial;
+            background: #f2f2f2;
+            text-align: center;
+        }
+        .box {
+            background: white;
+            padding: 30px;
+            margin: 100px auto;
+            width: 300px;
+            border-radius: 8px;
+        }
+        button {
+            padding: 10px 20px;
+            margin-top: 15px;
+            width: 100%;
+            cursor: pointer;
+        }
+    </style>
 </head>
+
 <body>
 
-<div class="login-container">
-    <h2>Wildlife Corridor System</h2>
+<div class="box">
+    <h2>Wildlife Corridor</h2>
 
-    <div class="login-box">
-        <h3>Admin Login</h3>
-        <form action="/admin/login/" method="get">
-            <button type="submit">Login as Admin</button>
-        </form>
-    </div>
+    <button onclick="location.href='/admin-dashboard/'">
+        Login as Admin
+    </button>
 
-    <div class="login-box">
-        <h3>Sensor / Animal Login</h3>
-        <form action="/sensor-login/" method="get">
-            <button type="submit">Login as Animal</button>
-        </form>
-    </div>
+    <button onclick="location.href='/sensor/'">
+        Login as Animal (Sensor)
+    </button>
 </div>
 
 </body>
