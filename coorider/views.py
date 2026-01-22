@@ -1,56 +1,63 @@
 from django.shortcuts import render
 from django.http import JsonResponse
-from django.views.decorators.csrf import csrf_exempt
-from .models import AnimalLocation
 import json
 
+# Store animal locations in memory (demo purposes)
+ANIMAL_LOCATIONS = {}
 
+# ---------------------
+# Dashboard page
+# ---------------------
 def dashboard(request):
-    """
-    Admin dashboard – shows map
-    """
-    return render(request, 'dashboard.html')
+    return render(request, 'index.html')
 
-
-@csrf_exempt
-def update_location(request):
-    """
-    API endpoint
-    Phone (animal) sends GPS location here
-    """
+# ---------------------
+# Animal login page
+# ---------------------
+def login_view(request):
+    error = None
     if request.method == 'POST':
-        data = json.loads(request.body)
+        animal_id = request.POST.get('animal_id')
+        if animal_id:
+            return render(request, 'sensor.html', {'animal_id': animal_id})
+        else:
+            error = "Please enter Animal ID."
+    return render(request, 'login.html', {'error': error})
 
-        animal_id = data.get('animal_id')
-        latitude = data.get('latitude')
-        longitude = data.get('longitude')
+# ---------------------
+# Animal sensor page
+# ---------------------
+def sensor_view(request):
+    return render(request, 'sensor.html')
 
-        AnimalLocation.objects.update_or_create(
-            animal_id=animal_id,
-            defaults={
-                'latitude': latitude,
-                'longitude': longitude
-            }
-        )
+# ---------------------
+# API: Update animal GPS
+# ---------------------
+def update_location(request):
+    if request.method == 'POST':
+        try:
+            data = json.loads(request.body)
+            animal_id = data.get('animal_id')
+            lat = data.get('latitude')
+            lng = data.get('longitude')
+            if animal_id and lat and lng:
+                ANIMAL_LOCATIONS[animal_id] = {'latitude': lat, 'longitude': lng}
+                return JsonResponse({'status': 'ok'})
+            else:
+                return JsonResponse({'error': 'Invalid data'}, status=400)
+        except json.JSONDecodeError:
+            return JsonResponse({'error': 'Invalid JSON'}, status=400)
+    return JsonResponse({'error': 'Invalid method'}, status=400)
 
-        return JsonResponse({'status': 'success'})
-
-    return JsonResponse({'error': 'Invalid request'}, status=400)
-
-
+# ---------------------
+# API: Get all animal locations
+# ---------------------
 def get_locations(request):
-    """
-    Sends all animal locations to map
-    """
-    locations = AnimalLocation.objects.all()
-    data = []
-
-    for loc in locations:
-        data.append({
-            'animal_id': loc.animal_id,
-            'latitude': loc.latitude,
-            'longitude': loc.longitude
+    response = []
+    for animal_id, loc in ANIMAL_LOCATIONS.items():
+        response.append({
+            'animal_id': animal_id,
+            'latitude': loc['latitude'],
+            'longitude': loc['longitude']
         })
-
-    return JsonResponse(data, safe=False)
-
+    return JsonResponse(response, safe=False)
