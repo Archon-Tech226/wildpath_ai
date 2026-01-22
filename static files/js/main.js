@@ -1,5 +1,5 @@
-// Initialize map
-var map = L.map('map').setView([11.0, 76.9], 12);  // Center coordinates
+// Initialize Leaflet map
+var map = L.map('map').setView([11.0, 76.9], 12); // Centered over your region
 
 // Load OpenStreetMap tiles
 L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
@@ -29,4 +29,3 @@ setInterval(function() {
         })
         .catch(err => console.error("Error fetching locations:", err));
 }, 3000);
-
