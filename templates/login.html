@@ -1,1 +1,27 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Animal Login</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<body>
+    <div style="text-align:center; margin-top:50px;">
+        <h2>Animal Login</h2>
+
+        {% if error %}
+            <p style="color:red">{{ error }}</p>
+        {% endif %}
+
+        <form method="post">
+            {% csrf_token %}
+            <input type="text" name="animal_id" placeholder="Enter Animal ID" required style="padding:10px; width:200px;">
+            <br><br>
+            <button type="submit" style="padding:10px 20px;">Login</button>
+        </form>
+    </div>
+</body>
+</html>
 
