@@ -1,17 +1,21 @@
+import os
 from pathlib import Path
 
+# -----------------------------
+# BASE DIR
+# -----------------------------
 BASE_DIR = Path(__file__).resolve().parent.parent
 
+# -----------------------------
+# SECURITY
+# -----------------------------
 SECRET_KEY = 'django-insecure-hackathon-demo-key'
-
 DEBUG = True
+ALLOWED_HOSTS = ['*']   # for hackathon / Render free tier
 
-ALLOWED_HOSTS = ['*']
-
-
-# ======================
-# APPLICATIONS
-# ======================
+# -----------------------------
+# INSTALLED APPS
+# -----------------------------
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
@@ -20,13 +24,12 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
-    'coorider',   # OUR APP
+    'coorider',   # Your app
 ]
 
-
-# ======================
+# -----------------------------
 # MIDDLEWARE
-# ======================
+# -----------------------------
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -37,21 +40,19 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
-
-# ======================
-# URL CONFIG
-# ======================
+# -----------------------------
+# URL CONFIGURATION
+# -----------------------------
 ROOT_URLCONF = 'wildlife_corrider.urls'
 
-
-# ======================
+# -----------------------------
 # TEMPLATES
-# ======================
+# -----------------------------
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [BASE_DIR / 'templates'],   # IMPORTANT
-        'APP_DIRS': True,
+        'DIRS': [BASE_DIR / 'templates'],  # Project-level templates
+        'APP_DIRS': True,                  # Also look in app folders
         'OPTIONS': {
             'context_processors': [
                 'django.template.context_processors.debug',
@@ -63,16 +64,14 @@ TEMPLATES = [
     },
 ]
 
-
-# ======================
+# -----------------------------
 # WSGI
-# ======================
+# -----------------------------
 WSGI_APPLICATION = 'wildlife_corrider.wsgi.application'
 
-
-# ======================
-# DATABASE (Simple SQLite)
-# ======================
+# -----------------------------
+# DATABASE (SQLite)
+# -----------------------------
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
@@ -80,10 +79,9 @@ DATABASES = {
     }
 }
 
-
-# ======================
-# PASSWORD (DEFAULT)
-# ======================
+# -----------------------------
+# PASSWORD VALIDATION
+# -----------------------------
 AUTH_PASSWORD_VALIDATORS = [
     {
         'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
@@ -99,26 +97,23 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-
-# ======================
-# LANGUAGE & TIME
-# ======================
+# -----------------------------
+# LANGUAGE & TIMEZONE
+# -----------------------------
 LANGUAGE_CODE = 'en-us'
 TIME_ZONE = 'Asia/Kolkata'
 USE_I18N = True
+USE_L10N = True
 USE_TZ = True
 
-
-# ======================
+# -----------------------------
 # STATIC FILES
-# ======================
+# -----------------------------
 STATIC_URL = '/static/'
-STATICFILES_DIRS = [BASE_DIR / 'static']
-STATIC_ROOT = BASE_DIR / 'staticfiles'
+STATICFILES_DIRS = [BASE_DIR / 'static']  # Project-level static files
+STATIC_ROOT = BASE_DIR / 'staticfiles'    # For Render deployment
 
-
-# ======================
+# -----------------------------
 # DEFAULT AUTO FIELD
-# ======================
+# -----------------------------
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
-
