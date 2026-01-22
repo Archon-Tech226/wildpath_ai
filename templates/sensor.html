@@ -2,24 +2,35 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Animal GPS Sensor</title>
+    <title>Animal Sensor</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <!-- External CSS -->
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
 </head>
 <body>
-    <div class="sensor-container">
-        <h2>Animal Sensor Active: {{ animal_id }}</h2>
-        <p id="status">Waiting for GPS...</p>
-    </div>
 
-    <!-- External JS for sensor -->
-    <script src="{% static 'js/main.js' %}"></script>
-    <!-- Pass animal_id from Django to JS -->
-    <script>
-        const animal_id = "{{ animal_id }}";
-        initSensor(animal_id);  // Function defined in sensor.js
-    </script>
+<h2>Animal GPS Sensor</h2>
+
+<form method="post">
+    {% csrf_token %}
+    <input type="text" name="animal_id" placeholder="Enter Animal ID" required>
+    <button type="submit">Start Tracking</button>
+</form>
+
+<script>
+navigator.geolocation.watchPosition(function(position) {
+    fetch("/update-location/", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+            animal_id: "{{ animal_id }}",
+            latitude: position.coords.latitude,
+            longitude: position.coords.longitude
+        })
+    });
+});
+</script>
+
 </body>
 </html>
